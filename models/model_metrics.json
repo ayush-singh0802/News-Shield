@@ -1,0 +1,185 @@
+{
+    "best_model": "Passive Aggressive Classifier",
+    "models_evaluated": [
+        {
+            "Model": "Passive Aggressive Classifier",
+            "Accuracy": 100.0,
+            "Precision": 100.0,
+            "Recall": 100.0,
+            "F1-Score": 100.0,
+            "Confusion Matrix": [
+                [
+                    53,
+                    0
+                ],
+                [
+                    0,
+                    53
+                ]
+            ],
+            "Raw Report": {
+                "0": {
+                    "precision": 1.0,
+                    "recall": 1.0,
+                    "f1-score": 1.0,
+                    "support": 53.0
+                },
+                "1": {
+                    "precision": 1.0,
+                    "recall": 1.0,
+                    "f1-score": 1.0,
+                    "support": 53.0
+                },
+                "accuracy": 1.0,
+                "macro avg": {
+                    "precision": 1.0,
+                    "recall": 1.0,
+                    "f1-score": 1.0,
+                    "support": 106.0
+                },
+                "weighted avg": {
+                    "precision": 1.0,
+                    "recall": 1.0,
+                    "f1-score": 1.0,
+                    "support": 106.0
+                }
+            },
+            "5-Fold CV Accuracy": 99.76
+        },
+        {
+            "Model": "Logistic Regression",
+            "Accuracy": 100.0,
+            "Precision": 100.0,
+            "Recall": 100.0,
+            "F1-Score": 100.0,
+            "Confusion Matrix": [
+                [
+                    53,
+                    0
+                ],
+                [
+                    0,
+                    53
+                ]
+            ],
+            "Raw Report": {
+                "0": {
+                    "precision": 1.0,
+                    "recall": 1.0,
+                    "f1-score": 1.0,
+                    "support": 53.0
+                },
+                "1": {
+                    "precision": 1.0,
+                    "recall": 1.0,
+                    "f1-score": 1.0,
+                    "support": 53.0
+                },
+                "accuracy": 1.0,
+                "macro avg": {
+                    "precision": 1.0,
+                    "recall": 1.0,
+                    "f1-score": 1.0,
+                    "support": 106.0
+                },
+                "weighted avg": {
+                    "precision": 1.0,
+                    "recall": 1.0,
+                    "f1-score": 1.0,
+                    "support": 106.0
+                }
+            },
+            "5-Fold CV Accuracy": 99.53
+        },
+        {
+            "Model": "Multinomial Naive Bayes",
+            "Accuracy": 100.0,
+            "Precision": 100.0,
+            "Recall": 100.0,
+            "F1-Score": 100.0,
+            "Confusion Matrix": [
+                [
+                    53,
+                    0
+                ],
+                [
+                    0,
+                    53
+                ]
+            ],
+            "Raw Report": {
+                "0": {
+                    "precision": 1.0,
+                    "recall": 1.0,
+                    "f1-score": 1.0,
+                    "support": 53.0
+                },
+                "1": {
+                    "precision": 1.0,
+                    "recall": 1.0,
+                    "f1-score": 1.0,
+                    "support": 53.0
+                },
+                "accuracy": 1.0,
+                "macro avg": {
+                    "precision": 1.0,
+                    "recall": 1.0,
+                    "f1-score": 1.0,
+                    "support": 106.0
+                },
+                "weighted avg": {
+                    "precision": 1.0,
+                    "recall": 1.0,
+                    "f1-score": 1.0,
+                    "support": 106.0
+                }
+            },
+            "5-Fold CV Accuracy": 100.0
+        },
+        {
+            "Model": "Random Forest Classifier",
+            "Accuracy": 100.0,
+            "Precision": 100.0,
+            "Recall": 100.0,
+            "F1-Score": 100.0,
+            "Confusion Matrix": [
+                [
+                    53,
+                    0
+                ],
+                [
+                    0,
+                    53
+                ]
+            ],
+            "Raw Report": {
+                "0": {
+                    "precision": 1.0,
+                    "recall": 1.0,
+                    "f1-score": 1.0,
+                    "support": 53.0
+                },
+                "1": {
+                    "precision": 1.0,
+                    "recall": 1.0,
+                    "f1-score": 1.0,
+                    "support": 53.0
+                },
+                "accuracy": 1.0,
+                "macro avg": {
+                    "precision": 1.0,
+                    "recall": 1.0,
+                    "f1-score": 1.0,
+                    "support": 106.0
+                },
+                "weighted avg": {
+                    "precision": 1.0,
+                    "recall": 1.0,
+                    "f1-score": 1.0,
+                    "support": 106.0
+                }
+            },
+            "5-Fold CV Accuracy": 98.82
+        }
+    ]
+}
