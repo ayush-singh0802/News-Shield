@@ -131,6 +131,20 @@ with st.sidebar:
     - **Target Task:** Binary Text Classification
     """)
     st.divider()
+    
+    # Threshold Configuration
+    st.markdown("### ⚙️ Model Configuration")
+    prediction_threshold = st.slider(
+        "📊 Prediction Confidence Threshold",
+        min_value=0.50,
+        max_value=0.99,
+        value=0.80,
+        step=0.01,
+        help="Minimum confidence (0.80 = default) needed to classify as REAL news. Higher threshold = more conservative (favors FAKE classification)"
+    )
+    st.caption(f"Current threshold: **{prediction_threshold:.2%}**")
+    st.divider()
+    
     st.info("💡 **Tip:** Test real news headlines from BBC/Reuters or classic viral clickbait rumors to inspect the model's classification confidence.")
 
 # Main Header
@@ -197,20 +211,34 @@ with tab1:
             else:
                 # Vectorization & Prediction
                 vec_input = vectorizer.transform([cleaned_text])
-                raw_pred = model.predict(vec_input)[0]
-
-                # Confidence calculation
+                
+                # Get probability scores for threshold-based prediction
+                prob_real = None  # Probability of class 1 (REAL news)
+                
                 if hasattr(model, "predict_proba"):
                     proba = model.predict_proba(vec_input)[0]
-                    confidence = proba[raw_pred] * 100
+                    prob_real = proba[1]  # Probability of class 1
+                    confidence = proba[1] * 100  # Confidence as percentage
                 elif hasattr(model, "decision_function"):
                     decision = model.decision_function(vec_input)[0]
                     # Sigmoid approximation for Passive Aggressive decision function
-                    prob_val = 1 / (1 + np.exp(-decision))
-                    confidence = (prob_val if raw_pred == 1 else (1 - prob_val)) * 100
+                    prob_real = 1 / (1 + np.exp(-decision))
+                    confidence = prob_real * 100
                     confidence = max(min(confidence, 99.4), 65.0)  # Bound reasonably
                 else:
+                    # Fallback: use model's raw prediction
+                    raw_pred = model.predict(vec_input)[0]
+                    prob_real = float(raw_pred)
                     confidence = 92.5
+                
+                # Apply threshold to probability score
+                final_pred = 1 if prob_real >= prediction_threshold else 0
+                
+                # Get raw prediction for comparison (if available)
+                try:
+                    raw_pred = model.predict(vec_input)[0]
+                except:
+                    raw_pred = final_pred
 
                 st.markdown("---")
                 st.subheader("🎯 Prediction Result")
@@ -218,7 +246,7 @@ with tab1:
                 col_res1, col_res2 = st.columns([1.2, 1])
 
                 with col_res1:
-                    if raw_pred == 1:
+                    if final_pred == 1:
                         st.markdown("""
                         <div class="badge-real">
                             ✅ AUTHENTIC / REAL NEWS
