@@ -138,9 +138,9 @@ with st.sidebar:
         "📊 Prediction Confidence Threshold",
         min_value=0.50,
         max_value=0.99,
-        value=0.70,
+        value=0.69,
         step=0.01,
-        help="Minimum confidence (0.70 = default) needed to classify as REAL news. Higher threshold = more conservative (favors FAKE classification)"
+        help="Minimum confidence (0.69 = default) needed to classify as REAL news. Higher threshold = more conservative (favors FAKE classification)"
     )
     st.caption(f"Current threshold: **{prediction_threshold:.2%}**")
     st.divider()
