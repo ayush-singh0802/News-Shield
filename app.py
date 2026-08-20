@@ -138,9 +138,9 @@ with st.sidebar:
         "📊 Prediction Confidence Threshold",
         min_value=0.50,
         max_value=0.99,
-        value=0.80,
+        value=0.70,
         step=0.01,
-        help="Minimum confidence (0.80 = default) needed to classify as REAL news. Higher threshold = more conservative (favors FAKE classification)"
+        help="Minimum confidence (0.70 = default) needed to classify as REAL news. Higher threshold = more conservative (favors FAKE classification)"
     )
     st.caption(f"Current threshold: **{prediction_threshold:.2%}**")
     st.divider()
@@ -173,32 +173,43 @@ with tab1:
     # Sample Preset Buttons
     col_s1, col_s2, col_s3, col_s4 = st.columns(4)
 
-    preset_title = ""
-    preset_text = ""
+    presets = {
+        "nasa": (
+            "NASA James Webb Space Telescope Captures Deepest Image of Early Universe",
+            "NASA's James Webb Space Telescope has produced the deepest and sharpest infrared image of the distant universe to date. The image shows thousands of galaxies including the faintest objects ever observed in the infrared."
+        ),
+        "miracle_herb": (
+            "Miracle Plant from Amazon Rainforest Cures All Types of Cancer in 48 Hours!",
+            "Big Pharma is panicking! A hidden Peruvian leaf discovered by an underground herbalist destroys 100% of cancer cells overnight without chemotherapy or radiation. Order your miracle bottle today!"
+        ),
+        "renewable_energy": (
+            "Renewable Energy Surpasses Coal in Electricity Generation Across Major Economies",
+            "A new report from the International Energy Agency confirms that solar and wind power generation outpaced coal-fired electricity across several leading nations during the past fiscal quarter."
+        ),
+        "5g_conspiracy": (
+            "5G Cell Towers Are Actually Weather Control Weapons Causing Volcanic Eruptions",
+            "Leaked military patents reveal that newly constructed 5G wireless broadband towers emit electromagnetic frequency pulses that directly trigger earthquakes and volcanic eruptions across major fault lines."
+        )
+    }
 
-    if col_s1.button("🪐 NASA Telescope (Real)", use_container_width=True):
-        preset_title = "NASA James Webb Space Telescope Captures Deepest Image of Early Universe"
-        preset_text = "NASA's James Webb Space Telescope has produced the deepest and sharpest infrared image of the distant universe to date. The image shows thousands of galaxies including the faintest objects ever observed in the infrared."
+    def load_preset(preset_key):
+        preset_title, preset_text = presets[preset_key]
+        st.session_state["title_input"] = preset_title
+        st.session_state["text_input"] = preset_text
+        st.session_state["preset_loaded"] = True
 
-    if col_s2.button("💉 Miracle Herb Hoax (Fake)", use_container_width=True):
-        preset_title = "Miracle Plant from Amazon Rainforest Cures All Types of Cancer in 48 Hours!"
-        preset_text = "Big Pharma is panicking! A hidden Peruvian leaf discovered by an underground herbalist destroys 100% of cancer cells overnight without chemotherapy or radiation. Order your miracle bottle today!"
-
-    if col_s3.button("⚡ Renewable Energy (Real)", use_container_width=True):
-        preset_title = "Renewable Energy Surpasses Coal in Electricity Generation Across Major Economies"
-        preset_text = "A new report from the International Energy Agency confirms that solar and wind power generation outpaced coal-fired electricity across several leading nations during the past fiscal quarter."
-
-    if col_s4.button("📡 5G Conspiracy (Fake)", use_container_width=True):
-        preset_title = "5G Cell Towers Are Actually Weather Control Weapons Causing Volcanic Eruptions"
-        preset_text = "Leaked military patents reveal that newly constructed 5G wireless broadband towers emit electromagnetic frequency pulses that directly trigger earthquakes and volcanic eruptions across major fault lines."
+    col_s1.button("🪐 NASA Telescope (Real)", use_container_width=True, on_click=load_preset, args=("nasa",))
+    col_s2.button("💉 Miracle Herb Hoax (Fake)", use_container_width=True, on_click=load_preset, args=("miracle_herb",))
+    col_s3.button("⚡ Renewable Energy (Real)", use_container_width=True, on_click=load_preset, args=("renewable_energy",))
+    col_s4.button("📡 5G Conspiracy (Fake)", use_container_width=True, on_click=load_preset, args=("5g_conspiracy",))
 
     # Input Form
-    title_input = st.text_input("News Title / Headline:", value=preset_title, placeholder="e.g., Supreme Court Issues Ruling on Regulatory Limits...")
-    text_input = st.text_area("News Body Content:", value=preset_text, height=140, placeholder="Paste full article paragraph or text summary here...")
+    title_input = st.text_input("News Title / Headline:", key="title_input", placeholder="e.g., Supreme Court Issues Ruling on Regulatory Limits...")
+    text_input = st.text_area("News Body Content:", key="text_input", height=140, placeholder="Paste full article paragraph or text summary here...")
 
     predict_btn = st.button("🚀 Analyze Authenticity", type="primary", use_container_width=True)
 
-    if predict_btn or (preset_title and preset_text):
+    if predict_btn or st.session_state.pop("preset_loaded", False):
         if not title_input.strip() and not text_input.strip():
             st.warning("⚠️ Please provide a news headline or article body text to analyze.")
         else:
