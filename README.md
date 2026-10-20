@@ -13,9 +13,10 @@
 ## 🏛️ Academic & Institutional Details
 
 - **Academic Program:** Bachelor of Technology (B.Tech) in Computer Science & Engineering
+- **Batch:** 2022 – 2026
 - **Institution:** Greater Noida Institute of Technology (Engineering Institute), Plot No-7, Knowledge Park-II, Greater Noida
 - **Affiliation:** Dr. A.P.J. Abdul Kalam Technical University (AKTU), Lucknow
-- **Project Type:** Major Project Synopsis & Implementation
+- **Project Type:** Major Project Implementation
 - **Project Guide / Supervisor:** **Mr. Rohit Vaid**
 
 ### 👥 Student Project Team
@@ -28,7 +29,7 @@
 
 ---
 
-## 📑 Project Index (Aligned with Project Synopsis)
+## 📑 Table of Contents
 
 1. [Introduction & Problem Statement](#1-introduction--problem-statement)
 2. [Notations & Nomenclature](#2-notations--nomenclature)
@@ -89,7 +90,7 @@ The News Shield project builds upon foundational research in computational misin
 
 ## 4. Project Objectives
 
-Directly addressing the eight core objectives defined in the Project Synopsis:
+The core objectives formulated for the News Shield system are:
 
 1. **Literature & State-of-the-Art Review:** Study existing fake-news detection paradigms, feature representations, and evaluation strategies.
 2. **Dataset Selection & Documentation:** Curate and document a balanced, labelled real/fake dataset covering politics, science, health, technology, and economy.
@@ -136,7 +137,7 @@ The project workflow follows an 8-stage methodology:
 └───────────────────────────┬────────────────────────────┘
                             │
 ┌───────────────────────────▼────────────────────────────┐
-│ 8. Unseen Robustness Testing & Synopsis Reporting      │
+│ 8. Unseen Robustness Testing & Final Documentation     │
 └────────────────────────────────────────────────────────┘
 ```
 
@@ -267,7 +268,7 @@ The **News Shield** web application is implemented in [`app.py`](file:///c:/User
    - Drag-and-drop CSV uploader for batch classification.
    - Automatic column detection (`title`, `text`, `body`, `headline`).
    - Distribution pie charts and downloadable annotated CSVs.
-4. **🎓 Project Synopsis & Viva Notes:**
+4. **🎓 Project Overview & Viva Notes:**
    - Institutional and student metadata.
    - Detailed mathematical formulas for TF-IDF, Sigmoidal decisions, Margin boundaries, and Ensembles.
    - Model answers for academic viva defense examinations.
@@ -294,9 +295,11 @@ News-Shield/
 ├── train.py                        # Model training, 5-fold CV, and benchmarking script
 ├── test_accuracy.py                # Standalone test script evaluating 16 unseen real news cases
 ├── benchmark_all.py                # Comparative benchmark script for all 6 models
+├── build_strict_synopsis.py        # Project documentation generation script
+├── convert_to_pdf.ps1              # High-fidelity Word COM to PDF converter
 ├── Fake_News_Detection_EDA.ipynb   # Jupyter Notebook for exploratory analysis & charts
 ├── requirements.txt                # Python package dependencies
-├── DOC-20261016-WA0014.pdf         # Official Major Project Synopsis document
+├── News_Shield_Project_Synopsis.pdf# Major Project Documentation PDF
 └── README.md                       # Comprehensive Project Documentation
 ```
 

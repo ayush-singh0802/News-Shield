@@ -172,15 +172,19 @@ def generate_strict_synopsis():
     p_deg = doc.add_paragraph()
     p_deg.alignment = WD_ALIGN_PARAGRAPH.CENTER
     p_deg.paragraph_format.line_spacing = 1.15
-    p_deg.paragraph_format.space_after = Pt(20)
+    p_deg.paragraph_format.space_after = Pt(14)
     r_d1 = p_deg.add_run("BACHELOR OF TECHNOLOGY\n")
     r_d1.bold = True
     r_d1.font.size = Pt(13.5)
     r_d1.font.name = 'Times New Roman'
-    r_d2 = p_deg.add_run("COMPUTER SCIENCE & ENGINEERING")
+    r_d2 = p_deg.add_run("COMPUTER SCIENCE & ENGINEERING\n")
     r_d2.bold = True
     r_d2.font.size = Pt(14.5)
     r_d2.font.name = 'Times New Roman'
+    r_d3 = p_deg.add_run("Batch: 2022 - 2026")
+    r_d3.bold = True
+    r_d3.font.size = Pt(12)
+    r_d3.font.name = 'Times New Roman'
 
     # Students Table (Width: 5.8 in, safe margin buffer)
     t_stud = doc.add_table(rows=1, cols=2)
@@ -289,8 +293,8 @@ def generate_strict_synopsis():
         ("1. Introduction", "3"),
         ("2. Literature Review", "4"),
         ("3. Objectives of the Project", "5"),
-        ("4. Methodology / Planning of Work", "5"),
-        ("5. References", "6")
+        ("4. Methodology / Planning of Work", "6"),
+        ("5. References", "7")
     ]
 
     for title, pg in index_items:
@@ -398,6 +402,17 @@ def generate_strict_synopsis():
         run.font.size = Pt(11)
         return p
 
+    def add_bullet_p(text):
+        p = doc.add_paragraph()
+        p.alignment = WD_ALIGN_PARAGRAPH.LEFT
+        p.paragraph_format.line_spacing = 1.2
+        p.paragraph_format.space_after = Pt(2.5)
+        p.paragraph_format.left_indent = Inches(0.25)
+        run = p.add_run(text)
+        run.font.name = 'Times New Roman'
+        run.font.size = Pt(11)
+        return p
+
     # -------------------------------------------------------------
     # 1. INTRODUCTION (Max 3 pages)
     # -------------------------------------------------------------
@@ -421,10 +436,16 @@ def generate_strict_synopsis():
 
     add_sub_heading("Field of project and special technical terms")
     add_body_p(
-        "The project belongs to the specialized field of Artificial Intelligence (AI) and Natural Language Processing (NLP). Key technical terms include:\n"
-        "• TF-IDF (Term Frequency-Inverse Document Frequency): A numerical statistic that reflects how important a word is to a document in a collection.\n"
-        "• Porter Stemmer: A heuristic rule-based morphological algorithm that removes word suffixes to map words to their root base.\n"
-        "• Stylometry: The statistical measurement of writing style, such as capital letter ratios, punctuation frequency, and sensationalist vocabulary."
+        "The project belongs to the specialized field of Artificial Intelligence (AI) and Natural Language Processing (NLP). Key technical terms include:"
+    )
+    add_bullet_p(
+        "• TF-IDF (Term Frequency-Inverse Document Frequency): A numerical statistic reflecting how important a word is to a document within a collection."
+    )
+    add_bullet_p(
+        "• Porter Stemmer: A heuristic morphological algorithm removing word suffixes to map tokens to their base form."
+    )
+    add_bullet_p(
+        "• Stylometry: The statistical measurement of writing style, including punctuation frequency, capitalization ratios, and sensationalist vocabulary."
     )
 
     add_sub_heading("Scope and expected contribution")
@@ -457,59 +478,70 @@ def generate_strict_synopsis():
     doc.add_page_break()
 
     # -------------------------------------------------------------
-    # 3. OBJECTIVES
+    # 3. OBJECTIVES (On its own dedicated page)
     # -------------------------------------------------------------
     add_section_heading("3. OBJECTIVES")
-    add_body_p("The specific, logically connected objectives of the project are:")
+    add_body_p(
+        "Based upon the literature review and the identified research problem, the primary goal of News Shield is to design, evaluate, and benchmark a reliable machine learning system for news credibility assessment. The general objective is broken down into eight logically connected parts:"
+    )
 
     objectives = [
-        "1. Study existing fake-news detection approaches, datasets, and techniques relevant to the selected project scope.",
-        "2. Select and document a labelled real/fake news dataset, including its provenance, licence, categories, and limitations.",
-        "3. Pre-process the text and compare suitable feature representations such as TF-IDF and Bag-of-Words; treat embeddings as an optional extension.",
-        "4. Train and evaluate baseline classifiers, including Naive Bayes, Logistic Regression, and SVM; add other models only when feasible.",
-        "5. Explore an LSTM/Bi-LSTM or BERT-based model as an optional advanced comparison if time and compute allow.",
-        "6. Compare models with accuracy, precision, recall, F1-score, and a confusion matrix on held-out data; use cross-validation only within training data when appropriate.",
-        "7. Develop a user-friendly web interface for text input and a cautious prediction with a clearly explained model confidence score.",
-        "8. Review errors and describe limits in generalizing across topics, domains, languages, and writing styles."
+        ("1. Literature & State-of-the-Art Review:", "Study existing fake news detection approaches, benchmark datasets (LIAR, FakeNewsNet, ISOT), feature representations, and evaluation frameworks relevant to the selected project scope."),
+        ("2. Dataset Selection & Curation:", "Select, balance, and document a labelled real/fake news dataset across diverse domains (politics, science, health, technology), recording provenance, license, and known limitations."),
+        ("3. Text Preprocessing & Cleaning:", "Implement a standardized NLP pipeline including URL/HTML stripping, non-alphabetic filtering, stop-word elimination, and morphological stemming (Porter Stemmer)."),
+        ("4. Feature Extraction & Representation:", "Compare TF-IDF (unigrams and bigrams with sublinear scaling) and Bag-of-Words representations to extract discriminating lexical and stylometric patterns."),
+        ("5. Baseline Classifier Benchmarking:", "Train and evaluate multiple supervised classification models, including Multinomial Naive Bayes, Logistic Regression, Support Vector Machines (Linear SVM), and Random Forest."),
+        ("6. Rigorous Empirical Evaluation:", "Measure generalization performance using 5-Fold Stratified Cross-Validation, test accuracy, precision, recall, F1-score, ROC-AUC, and confusion matrix analysis on held-out data."),
+        ("7. Interactive Prototype Development:", "Build a responsive Streamlit web application providing real-time article verification, model confidence meters, stylometric indicators, and batch CSV processing."),
+        ("8. Error Analysis & Limitation Reporting:", "Analyze false-positive and false-negative boundaries, model uncertainty, and domain-transfer constraints to ensure responsible deployment as a screening aid.")
     ]
 
-    for obj in objectives:
+    for title, desc in objectives:
         p = doc.add_paragraph()
         p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
         p.paragraph_format.line_spacing = 1.25
-        p.paragraph_format.space_after = Pt(2)
-        r = p.add_run(obj)
-        r.font.name = 'Times New Roman'
-        r.font.size = Pt(11.5)
+        p.paragraph_format.space_after = Pt(4)
+        r_b = p.add_run(f"{title} ")
+        r_b.bold = True
+        r_b.font.name = 'Times New Roman'
+        r_b.font.size = Pt(11)
+        r_d = p.add_run(desc)
+        r_d.font.name = 'Times New Roman'
+        r_d.font.size = Pt(11)
+
+    doc.add_page_break()
 
     # -------------------------------------------------------------
-    # 4. METHODOLOGY / PLANNING OF WORK (Max 1 page)
+    # 4. METHODOLOGY / PLANNING OF WORK (On its own dedicated page)
     # -------------------------------------------------------------
     add_section_heading("4. METHODOLOGY / PLANNING OF WORK")
+    add_body_p(
+        "The project methodology comprises eight systematic development stages executed sequentially during project completion to ensure rigorous engineering and scientific reproducibility:"
+    )
 
     steps = [
-        ("1. Literature and requirements:", "confirm the project scope, labels, data permissions, interface needs, and evaluation plan with the guide."),
-        ("2. Dataset selection:", "review candidate resources such as LIAR, FakeNewsNet, or the supplied draft's Kaggle dataset; record provenance, licence, label definitions, and known limitations before selecting one."),
-        ("3. Data preparation:", "inspect class balance, missing values, and duplicates; split data into training and test sets before fitting preprocessing or feature transformations."),
-        ("4. Text processing and features:", "apply consistent cleaning, tokenization, and any selected stop-word or stemming/lemmatization steps. Compare TF-IDF and Bag-of-Words first; embeddings are optional."),
-        ("5. Model training:", "establish baseline models such as Naive Bayes, Logistic Regression, and SVM. Consider Random Forest, LSTM/Bi-LSTM, or BERT only as staged comparisons when feasible."),
-        ("6. Evaluation:", "report accuracy, precision, recall, F1-score, and a confusion matrix on held-out data; inspect false positives and false negatives. Do not report results before the experiment is run."),
-        ("7. Application development:", "build a simple front end and Flask or Django or Streamlit back end, integrate the selected preprocessing and trained model, and show a prediction with a caution about model uncertainty."),
-        ("8. Testing and documentation:", "test unseen examples, document limitations and future extensions, and prepare the final report. The prototype is a screening aid, not an automated authority on truth.")
+        ("Stage 1: Requirements Formulation & Scope Definition", "Define the problem boundaries, project scope, dataset permissions, evaluation criteria, and user interface requirements in consultation with the project guide."),
+        ("Stage 2: Dataset Acquisition & Exploratory Analysis", "Acquire and verify a balanced corpus of real and fake news articles; inspect class distributions, missing values, text-length variations, and potential duplicate samples."),
+        ("Stage 3: Data Partitioning & Preprocessing Pipeline", "Partition the dataset into stratified 80% training and 20% test subsets. Fit preprocessing transformations (URL stripping, tokenization, stop-word filtering, stemming) strictly on training data."),
+        ("Stage 4: Feature Engineering & Vector Space Construction", "Construct high-dimensional numerical feature matrices using TF-IDF vectorization (unigrams + bigrams, 8,000 max features, sublinear TF scaling) and stylometric indicators."),
+        ("Stage 5: Classifier Training & Hyperparameter Tuning", "Train candidate baseline classifiers (Multinomial Naive Bayes, Logistic Regression, Linear SVM with Platt probability calibration, Random Forest, and Ensemble Voting)."),
+        ("Stage 6: Multi-Metric Model Validation & Benchmarking", "Evaluate models using 5-Fold Stratified Cross-Validation on training data and hold-out testing for Accuracy, Precision, Recall, F1-Score, and Confusion Matrix generation."),
+        ("Stage 7: Web Application Interface Implementation", "Develop an interactive web dashboard (Streamlit) supporting real-time headline/article input, confidence meters, batch CSV analysis, and comparative benchmark visualizations."),
+        ("Stage 8: Robustness Testing & Final Documentation", "Perform stress testing on challenging unseen news articles, conduct error boundary analysis, document operational limits, and compile project documentation.")
     ]
 
     for title, desc in steps:
         p = doc.add_paragraph()
         p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
-        p.paragraph_format.line_spacing = 1.2
-        p.paragraph_format.space_after = Pt(2)
-        r_b = p.add_run(f"{title} ")
+        p.paragraph_format.line_spacing = 1.25
+        p.paragraph_format.space_after = Pt(4)
+        r_b = p.add_run(f"{title}: ")
         r_b.bold = True
         r_b.font.name = 'Times New Roman'
-        r_b.font.size = Pt(11.5)
+        r_b.font.size = Pt(11)
         r_d = p.add_run(desc)
         r_d.font.name = 'Times New Roman'
-        r_d.font.size = Pt(11.5)
+        r_d.font.size = Pt(11)
 
     doc.add_page_break()
 
@@ -533,12 +565,14 @@ def generate_strict_synopsis():
 
     for ref in references:
         p = doc.add_paragraph()
-        p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
-        p.paragraph_format.line_spacing = 1.2
-        p.paragraph_format.space_after = Pt(3)
+        p.alignment = WD_ALIGN_PARAGRAPH.LEFT
+        p.paragraph_format.line_spacing = 1.15
+        p.paragraph_format.space_after = Pt(4)
+        p.paragraph_format.left_indent = Inches(0.3)
+        p.paragraph_format.first_line_indent = Inches(-0.3)
         r = p.add_run(ref)
         r.font.name = 'Times New Roman'
-        r.font.size = Pt(11)
+        r.font.size = Pt(10.5)
 
     doc.save(DOCX_OUT)
     print(f"[SUCCESS] Saved Strict DOCX: {DOCX_OUT}")
