@@ -1,16 +1,19 @@
 """
-Text Preprocessing Pipeline for Fake News Detection
-Author: 2nd Year CSE Student (Mini Project)
+Text Preprocessing Pipeline for News Shield (Fake News Detection)
+Author: News Shield Project Team (GNIOT / AKTU)
+Supervisor: Mr. Rohit Vaid
 
 Key Steps:
 1. Cleaning HTML tags, URLs, special characters, and numbers.
 2. Converting all text to lowercase.
-3. Stopword removal (NLTK English stopwords).
-4. Stemming using Porter Stemmer (reducing words to root form).
+3. Stopword removal (NLTK English stopwords with fallback).
+4. Stemming using Porter Stemmer.
+5. Stylometric and linguistic marker extraction (ALL-CAPS ratio, sensational keywords, punctuation density).
 """
 
 import re
 import string
+
 try:
     import nltk
     from nltk.corpus import stopwords
@@ -22,7 +25,7 @@ try:
         STOP_WORDS = set(stopwords.words('english'))
     ps = PorterStemmer()
 except Exception:
-    # Graceful fallback stop words
+    # Graceful fallback stopwords
     STOP_WORDS = {
         'i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves', 'you', "you're",
         'he', 'him', 'his', 'himself', 'she', "she's", 'her', 'hers', 'herself',
@@ -39,6 +42,7 @@ except Exception:
         'very', 's', 't', 'can', 'will', 'just', 'don', "don't", 'should', "should've",
         'now', 'd', 'll', 'm', 'o', 're', 've', 'y', 'ain', 'aren'
     }
+
     class SimpleStemmer:
         def stem(self, word):
             if word.endswith('ing') and len(word) > 5:
@@ -50,6 +54,19 @@ except Exception:
             return word
     ps = SimpleStemmer()
 
+# Common Sensational / Clickbait Indicators
+SENSATIONAL_PATTERNS = {
+    'shocking', 'bombshell', 'exposed', 'leaked', 'conspiracy', 'whistleblower',
+    'secret', 'miracle', 'hoax', 'banned', 'suppressed', 'furious', 'bribed',
+    'scam', 'unbelievable', 'urgent', 'disaster', 'alien', 'coverup'
+}
+
+# Common Objective Journalistic Credibility Markers
+CREDIBILITY_PATTERNS = {
+    'published', 'study', 'researchers', 'scientists', 'investigation', 'reuters',
+    'spokesperson', 'confirmed', 'official', 'department', 'court', 'report',
+    'statistics', 'clinical', 'peer', 'regulatory', 'committee', 'conference'
+}
 
 
 def clean_text(text: str, apply_stemming: bool = True) -> str:
@@ -67,12 +84,12 @@ def clean_text(text: str, apply_stemming: bool = True) -> str:
         return ""
 
     # 1. Strip URLs & web links
-    text = re.sub(r'http\S+|www\.\S+', ' ', text)
+    text = re.sub(r'https?://\S+|www\.\S+', ' ', text)
 
     # 2. Strip HTML tags
     text = re.sub(r'<.*?>', ' ', text)
 
-    # 3. Strip non-alphanumeric characters (keep only letters and single spaces)
+    # 3. Strip non-alphanumeric characters (keep only letters and spaces)
     text = re.sub(r'[^a-zA-Z\s]', ' ', text)
 
     # 4. Convert to lowercase
@@ -94,13 +111,13 @@ def clean_text(text: str, apply_stemming: bool = True) -> str:
 def extract_linguistic_features(title: str, text: str) -> dict:
     """
     Extracts statistical & stylistic markers often found in sensational fake news
-    (e.g., excessive exclamation marks, ALL CAPS words, short sensational headlines).
+    (e.g., excessive exclamation marks, ALL CAPS words, sensational terminology).
     """
     full_content = f"{title or ''} {text or ''}".strip()
     words = full_content.split()
     word_count = len(words)
 
-    # Exclamation marks count
+    # Exclamation & question counts
     exclamation_count = full_content.count('!')
     question_count = full_content.count('?')
 
@@ -109,10 +126,21 @@ def extract_linguistic_features(title: str, text: str) -> dict:
     upper_chars = [c for c in non_space_chars if c.isupper()]
     caps_ratio = (len(upper_chars) / len(non_space_chars) * 100) if non_space_chars else 0.0
 
+    # Average word length
+    avg_word_len = round(sum(len(w) for w in words) / max(word_count, 1), 1)
+
+    # Sensational vs Credibility keyword matches
+    lower_tokens = set(re.findall(r'[a-zA-Z]+', full_content.lower()))
+    sensational_hits = len(lower_tokens.intersection(SENSATIONAL_PATTERNS))
+    credibility_hits = len(lower_tokens.intersection(CREDIBILITY_PATTERNS))
+
     return {
         "word_count": word_count,
         "char_count": len(full_content),
         "exclamation_count": exclamation_count,
         "question_count": question_count,
-        "caps_ratio_percent": round(caps_ratio, 2)
+        "caps_ratio_percent": round(caps_ratio, 2),
+        "avg_word_length": avg_word_len,
+        "sensational_indicators": sensational_hits,
+        "credibility_indicators": credibility_hits
     }

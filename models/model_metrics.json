@@ -1,20 +1,21 @@
 {
-    "best_model": "Passive Aggressive Classifier",
+    "best_model": "Logistic Regression",
     "models_evaluated": [
         {
-            "Model": "Passive Aggressive Classifier",
+            "Model": "Ensemble Classifier (Soft Voting)",
             "Accuracy": 100.0,
             "Precision": 100.0,
             "Recall": 100.0,
             "F1-Score": 100.0,
+            "ROC-AUC": 100.0,
             "Confusion Matrix": [
                 [
-                    53,
+                    120,
                     0
                 ],
                 [
                     0,
-                    53
+                    120
                 ]
             ],
             "Raw Report": {
@@ -22,29 +23,77 @@
                     "precision": 1.0,
                     "recall": 1.0,
                     "f1-score": 1.0,
-                    "support": 53.0
+                    "support": 120.0
                 },
                 "1": {
                     "precision": 1.0,
                     "recall": 1.0,
                     "f1-score": 1.0,
-                    "support": 53.0
+                    "support": 120.0
                 },
                 "accuracy": 1.0,
                 "macro avg": {
                     "precision": 1.0,
                     "recall": 1.0,
                     "f1-score": 1.0,
-                    "support": 106.0
+                    "support": 240.0
                 },
                 "weighted avg": {
                     "precision": 1.0,
                     "recall": 1.0,
                     "f1-score": 1.0,
-                    "support": 106.0
+                    "support": 240.0
                 }
             },
-            "5-Fold CV Accuracy": 99.76
+            "5-Fold CV Accuracy": 99.79,
+            "5-Fold CV Std": 0.26
+        },
+        {
+            "Model": "Support Vector Machine (Linear SVM)",
+            "Accuracy": 100.0,
+            "Precision": 100.0,
+            "Recall": 100.0,
+            "F1-Score": 100.0,
+            "ROC-AUC": 100.0,
+            "Confusion Matrix": [
+                [
+                    120,
+                    0
+                ],
+                [
+                    0,
+                    120
+                ]
+            ],
+            "Raw Report": {
+                "0": {
+                    "precision": 1.0,
+                    "recall": 1.0,
+                    "f1-score": 1.0,
+                    "support": 120.0
+                },
+                "1": {
+                    "precision": 1.0,
+                    "recall": 1.0,
+                    "f1-score": 1.0,
+                    "support": 120.0
+                },
+                "accuracy": 1.0,
+                "macro avg": {
+                    "precision": 1.0,
+                    "recall": 1.0,
+                    "f1-score": 1.0,
+                    "support": 240.0
+                },
+                "weighted avg": {
+                    "precision": 1.0,
+                    "recall": 1.0,
+                    "f1-score": 1.0,
+                    "support": 240.0
+                }
+            },
+            "5-Fold CV Accuracy": 99.9,
+            "5-Fold CV Std": 0.21
         },
         {
             "Model": "Logistic Regression",
@@ -52,14 +101,15 @@
             "Precision": 100.0,
             "Recall": 100.0,
             "F1-Score": 100.0,
+            "ROC-AUC": 100.0,
             "Confusion Matrix": [
                 [
-                    53,
+                    120,
                     0
                 ],
                 [
                     0,
-                    53
+                    120
                 ]
             ],
             "Raw Report": {
@@ -67,29 +117,77 @@
                     "precision": 1.0,
                     "recall": 1.0,
                     "f1-score": 1.0,
-                    "support": 53.0
+                    "support": 120.0
                 },
                 "1": {
                     "precision": 1.0,
                     "recall": 1.0,
                     "f1-score": 1.0,
-                    "support": 53.0
+                    "support": 120.0
                 },
                 "accuracy": 1.0,
                 "macro avg": {
                     "precision": 1.0,
                     "recall": 1.0,
                     "f1-score": 1.0,
-                    "support": 106.0
+                    "support": 240.0
                 },
                 "weighted avg": {
                     "precision": 1.0,
                     "recall": 1.0,
                     "f1-score": 1.0,
-                    "support": 106.0
+                    "support": 240.0
                 }
             },
-            "5-Fold CV Accuracy": 99.53
+            "5-Fold CV Accuracy": 100.0,
+            "5-Fold CV Std": 0.0
+        },
+        {
+            "Model": "Passive Aggressive Classifier",
+            "Accuracy": 100.0,
+            "Precision": 100.0,
+            "Recall": 100.0,
+            "F1-Score": 100.0,
+            "ROC-AUC": 100.0,
+            "Confusion Matrix": [
+                [
+                    120,
+                    0
+                ],
+                [
+                    0,
+                    120
+                ]
+            ],
+            "Raw Report": {
+                "0": {
+                    "precision": 1.0,
+                    "recall": 1.0,
+                    "f1-score": 1.0,
+                    "support": 120.0
+                },
+                "1": {
+                    "precision": 1.0,
+                    "recall": 1.0,
+                    "f1-score": 1.0,
+                    "support": 120.0
+                },
+                "accuracy": 1.0,
+                "macro avg": {
+                    "precision": 1.0,
+                    "recall": 1.0,
+                    "f1-score": 1.0,
+                    "support": 240.0
+                },
+                "weighted avg": {
+                    "precision": 1.0,
+                    "recall": 1.0,
+                    "f1-score": 1.0,
+                    "support": 240.0
+                }
+            },
+            "5-Fold CV Accuracy": 99.58,
+            "5-Fold CV Std": 0.21
         },
         {
             "Model": "Multinomial Naive Bayes",
@@ -97,14 +195,15 @@
             "Precision": 100.0,
             "Recall": 100.0,
             "F1-Score": 100.0,
+            "ROC-AUC": 100.0,
             "Confusion Matrix": [
                 [
-                    53,
+                    120,
                     0
                 ],
                 [
                     0,
-                    53
+                    120
                 ]
             ],
             "Raw Report": {
@@ -112,29 +211,30 @@
                     "precision": 1.0,
                     "recall": 1.0,
                     "f1-score": 1.0,
-                    "support": 53.0
+                    "support": 120.0
                 },
                 "1": {
                     "precision": 1.0,
                     "recall": 1.0,
                     "f1-score": 1.0,
-                    "support": 53.0
+                    "support": 120.0
                 },
                 "accuracy": 1.0,
                 "macro avg": {
                     "precision": 1.0,
                     "recall": 1.0,
                     "f1-score": 1.0,
-                    "support": 106.0
+                    "support": 240.0
                 },
                 "weighted avg": {
                     "precision": 1.0,
                     "recall": 1.0,
                     "f1-score": 1.0,
-                    "support": 106.0
+                    "support": 240.0
                 }
             },
-            "5-Fold CV Accuracy": 100.0
+            "5-Fold CV Accuracy": 99.79,
+            "5-Fold CV Std": 0.26
         },
         {
             "Model": "Random Forest Classifier",
@@ -142,14 +242,15 @@
             "Precision": 100.0,
             "Recall": 100.0,
             "F1-Score": 100.0,
+            "ROC-AUC": 100.0,
             "Confusion Matrix": [
                 [
-                    53,
+                    120,
                     0
                 ],
                 [
                     0,
-                    53
+                    120
                 ]
             ],
             "Raw Report": {
@@ -157,29 +258,30 @@
                     "precision": 1.0,
                     "recall": 1.0,
                     "f1-score": 1.0,
-                    "support": 53.0
+                    "support": 120.0
                 },
                 "1": {
                     "precision": 1.0,
                     "recall": 1.0,
                     "f1-score": 1.0,
-                    "support": 53.0
+                    "support": 120.0
                 },
                 "accuracy": 1.0,
                 "macro avg": {
                     "precision": 1.0,
                     "recall": 1.0,
                     "f1-score": 1.0,
-                    "support": 106.0
+                    "support": 240.0
                 },
                 "weighted avg": {
                     "precision": 1.0,
                     "recall": 1.0,
                     "f1-score": 1.0,
-                    "support": 106.0
+                    "support": 240.0
                 }
             },
-            "5-Fold CV Accuracy": 98.82
+            "5-Fold CV Accuracy": 99.69,
+            "5-Fold CV Std": 0.42
         }
     ]
 }
